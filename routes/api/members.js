@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
 
 
 
-// Create Member
+// Create Member - Post request
 router.post('/', (req, res) => {
   // res.send(req.body)
 
@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
 })
 
 
-// Update Member
+// Update Member - Put request
 router.put('/:id', (req, res) => {
   const found = members.some(member => member.id === parseInt(req.params.id))
 
@@ -61,10 +61,22 @@ router.put('/:id', (req, res) => {
       } 
     })
   } else {
-    // 400 bad request (can see it in postman also), client side error
     res.status(400).json({ msg: `No member with the id of ${req.params.id}`})
   }
-  
+
+})
+
+
+// Delete Member - delete request
+router.delete('/:id', (req, res) => {
+  const found = members.some(member => member.id === parseInt(req.params.id))
+
+  if (found) {
+    res.json({ msg: 'Member deletd', members: members.filter(member => member.id !== parseInt(req.params.id))})
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}`})
+  }
+
 })
 
 
