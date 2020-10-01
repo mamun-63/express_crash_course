@@ -23,6 +23,8 @@ router.get('/:id', (req, res) => {
 
 })
 
+
+
 // Create Member
 router.post('/', (req, res) => {
   // res.send(req.body)
@@ -41,6 +43,28 @@ router.post('/', (req, res) => {
   // members.save(newMembers) // when you're dealing with databases like mongodb, mongoose, any ORM, then you have to push newMwmber like this
   members.push(newMember)
   res.json(members)
+})
+
+
+// Update Member
+router.put('/:id', (req, res) => {
+  const found = members.some(member => member.id === parseInt(req.params.id))
+
+  if (found) {
+    const updMember = req.body
+    members.forEach(member => {
+      if (member.id === parseInt(req.params.id)) {
+        member.name = updMember.name ? updMember.name : member.name
+        member.email = updMember.email ? updMember.email : member.email
+
+        res.json({msg: 'Member updated', member})
+      } 
+    })
+  } else {
+    // 400 bad request (can see it in postman also), client side error
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}`})
+  }
+  
 })
 
 
