@@ -42,6 +42,7 @@ router.post('/', (req, res) => {
 
   // members.save(newMembers) // when you're dealing with databases like mongodb, mongoose, any ORM, then you have to push newMwmber like this
   members.push(newMember)
+  res.redirect('/') // for Form submission, rendering template
   res.json(members)
 })
 

@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const logger = require('./middleware/logger')
 const exphbs  = require('express-handlebars');
+const members = require('./Members')
 
 const app = express()
 
@@ -25,8 +26,13 @@ app.set('view engine', 'handlebars');
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+
 // Homepage Route (Rendering Template, template engine handlebars)
-app.get('/', (req, res) => res.render('index'))
+app.get('/', (req, res) => res.render('index', {
+  title: 'Member App',
+  members
+}))
+
 
 // Set static folder 
 app.use(express.static(path.join(__dirname, 'public')))
